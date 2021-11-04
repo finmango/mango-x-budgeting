@@ -1,0 +1,223 @@
+<!DOCTYPE html><html><!-- HTML page head --><head>
+    <!-- HTML metadata -->
+    <meta charset="UTF-8">
+    <title>FinMango Budget Simulator</title>
+    <meta name="description" content="Budget Simulator, made with love by FinMango">
+    <link rel="icon" type="image/ico" href="../../static/favicon.ico">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FinMango Budget Simulator">
+
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="../../static/favicon.ico">
+
+    <!-- Capabilities-related metadata -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <!-- Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- MomentJS -->
+    <script type="text/javascript" src="../../third_party/moment/min/moment.min.js"></script>
+
+    <!-- Custom styles and fonts -->
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/goldman-sans">
+    <link rel="stylesheet" href="../../third_party/picnic/picnic.min.css">
+    <link rel="stylesheet" href="../../static/styles.min.css">
+
+    <!-- Polyfills, custom functions and constants -->
+    <script type="text/javascript" src="../../static/cache.min.js"></script>
+    <script type="text/javascript" src="../../static/formatter.min.js"></script>
+    <script type="text/javascript" src="../../static/component-helper.min.js"></script>
+    <script type="text/javascript" src="../../static/polyfills.min.js"></script>
+    <script type="text/javascript">const DEFAULT_OPTIONS={};CURRENT_OPTIONS=Object.keys(DEFAULT_OPTIONS).reduce((t,e)=>Object.assign(t,{[e]:sessionStorage.getItem(e)||DEFAULT_OPTIONS[e]}),{}),GOOGLE_CHARTS_CONFIG=window.GOOGLE_CHARTS_CONFIG||{theme:"material",fontName:"Goldman Sans",colors:["{{theme-primary}}"],legend:{position:CURRENT_OPTIONS.chart_legend_position||"none"},chartArea:{width:"100%",height:"100%",left:parseInt(CURRENT_OPTIONS.chart_padding_left||64),bottom:parseInt(CURRENT_OPTIONS.chart_padding_bottom||48),top:parseInt(CURRENT_OPTIONS.chart_padding_top||24)},titlePosition:"in",axisTitlesPosition:"in",hAxis:{textPosition:"bottom",textStyle:{fontName:"Goldman Sans"}},vAxis:{textPosition:"out",viewWindow:{min:0},textStyle:{fontName:"Goldman Sans"}},height:parseInt(CURRENT_OPTIONS.chart_height||300)};</script>
+
+
+
+</head><body>
+    <!-- Page header -->
+    <header class="flex center one">
+    <div>
+        <a class="centered uppercase" target="_blank" href="https://finmango.org" style="display: block; padding: 0;">
+            <img class="centered" src="../../static/logo.png" height="128" width="auto">
+        </a>
+    </div>
+</header>
+
+    <main class="single-column-wide" style="margin-top: auto; margin-bottom: auto;">
+
+        <div class="spacer"></div>
+
+        <div class="screen animated" id="fire-calculator-chart">
+    <div>
+        <h2 class="centered" style="text-transform: none; font-size: xx-large;">
+            <span style="font-size: xx-large;">
+            THE <span id="winner" style="font-size: xx-large;"></span> WON! 🔥💯🥭
+            </span>
+         </h2>
+        <h2 class="margin-left" style="text-transform: none; font-size: medium;">
+           <span style="font-size: medium;">
+            At retirement, your Roth IRA balance could be <span id="curr-roth-balance" style="font-size: large;"></span>
+            and your Traditional IRA balance could be <span id="curr-trad-balance" style="font-size: large;"></span>.
+            If you invested in a Taxable Brokerage Account instead, 
+            your balance would only be about <span id="taxableacctbalance" style="font-size: large;"> $XXX,XXX</span>.
+        </span></h2>
+    </div>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+    <div id="chart-container" class="chart-container"></div>
+    <div class="spacer"></div>
+    <summary>NOTE: The Traditional IRA balance line dips because we subtract total income taxes 
+        you pay during retirement. </summary>
+    <div class="spacer"></div>
+    <details>
+        <summary>Calculator Options</summary>
+        <div class="spacer"></div>
+        <form class="flex one two-600">
+            <div>
+                <label for="age" style="margin-bottom: auto;">
+                    Your Age
+                    <br>
+                    <small>You can open an IRA account at any age you have earned income. If you are under 18, need help tough! See what happens when you start investing early.</small>
+                </label>
+                <input type="number" pattern="/d*" id="age" min="16" value="16" style="margin-top: auto;">
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="initial-income">
+                    Earned Income Per Year Before Taxes
+                    <br>
+                    <small>To qualify for a Roth IRA, your earned income must be less than $140,000 per year before taxes if you are single 
+                        and $208,000 per year if you are married and filing taxes together. 
+                    </small>
+                </label>
+                <input type="number" pattern="/d*" id="initial-income" min="1" value="40000" max="139000">
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="initial-balance">
+                    Current Roth IRA Balance
+                    <br>
+                    <small>Set to $0 if you do not have one yet!</small>
+                </label>
+                <input type="number" pattern="/d*" id="initial-balance" min="0" value="0">
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="annual-contribution">
+                    Your Annual Contribution
+                    <br>
+                    <small>The max you can contribute if you are less than 50 years old is about $6,000 per year.</small>
+                </label>
+                <input type="number" pattern="/d*" id="annual-contribution" min="1" value="1000">
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="retirement-age">
+                    Age You Want To Retire!
+                    <br>
+                    <small>65 is a normal retirement age at which you can draw full Social Security benefits.</small>
+                </label>
+                <input type="number" pattern="/d*" id="retirement-age" min="59" value="65">
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="risk-tolerance">
+                    Your Risk Tolerance
+                    <br>
+                    <small> 
+                        The more aggressive risk you take on, the greater the reward and potential Rate of Return (RoR).
+                    </small>
+                </label>
+                <select id="risk-tolerance">
+                    <option value="10">Aggressive (10% RoR)</option>
+                    <option value="7" selected>Moderate (7-8% RoR)</option>
+                    <option value="5.5">Conservative (5-6% RoR)</option>
+                </select> 
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="marital-status">
+                    Your Marital Status
+                    <br>
+                    <small> See the impact of your marital
+                        status on the Traditional IRA and taxable account balance. 
+                    </small>
+                </label>
+                <select id="marital-status">
+                    <option value="1" selected>Single</option>
+                    <option value="2">Married but Filing Taxes Separately</option>
+                    <option value="3">Married but Filing Taxes Jointly</option>
+                    <option value="4">Head of Household</option>
+                </select>
+            </div>
+            <div>
+                <label for="calculator-assumptions">
+                    Calculator Assumptions: 
+                    <br>
+                    <small>
+                        <li>
+                            Warning! Inputting an income that is too high outputs NaN (Not a Number)
+                        </li>
+                        <li>
+                            If you make over $140k if you are single and $208k if you're married, the 
+                            Roth IRA balance should be 0 because you do not quality.  
+                        </li>
+                        <li>
+                            We assume that your income rises 3% every year to keep up with the inflation rate.
+                            If these raises put you over the income to qualify for a Roth IRA, we stop 
+                            contributing to the account to make its balance more realistic. 
+                        </li>
+                        <li>
+                            We assume that you contribute at the start of the year and 
+                            that your return on your investments is compounded annually. 
+                        </li>
+                        <li>
+                            We estimate Average Rates of Return (RoR) for 
+                            different Risk Tolerances based on historical averages. 
+                        </li>
+                        <li>
+                            We use your marital status (defaults to single ❤️) and income to 
+                            to identify your marginal tax bracket and calculate 
+                            the after-tax yield for the Taxable Brokerage Account.   
+                        </li>
+                        <li>
+                            In order to calculate the total balance of the traditional IRA after taxes are taken out,
+                            we need to know your Retirement Tax Rate. This is a pretty complex calculation that depends on 
+                            the variety of taxable incomes and reductions. 
+                            To simplify this calculation and estimate the value, 
+                            we assume that your retirement tax rate is 3% lower than your marginal tax bracket. 
+                            We also add the taxable savings from investing in a Traditional IRA back into the total. 
+                        </li>
+                    </small>
+                </label>
+                <div class="spacer"></div>
+            </div>
+            <div>  
+        
+    </div></form></details>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+    <div class="screen animated" id="nav">
+        <div class="centered flex one">
+            <div class="spacer"></div>
+            <button onclick="location.href='https://finmango.github.io/mango-x-ira-battle/';">
+                START OVER</button>
+        </div>
+    </div>
+
+    <script async>function monthlyToAnnualRate(e){return Math.pow(e+1,12)-1}function annualToMonthlyRate(e){return Math.pow(e+1,1/12)-1}!async function(){const e=document.currentScript.parentElement;await CacheHelper.loadGoogleCharts();const a=e.querySelector("#chart-container"),n=e.querySelector("#age"),o=e.querySelector("#initial-income"),l=e.querySelector("#initial-balance"),t=e.querySelector("#initial-balance"),r=e.querySelector("#annual-contribution"),i=e.querySelector("#retirement-age"),c=e.querySelector("#risk-tolerance"),s=(e.querySelector("#expected-return"),e.querySelector("#marital-status"));(new ComponentHelper).addFormData(e.querySelector("form")).onLoad(()=>{var u=Number(n.value);const g=Number(o.value),d=Number(l.value),b=Number(t.value);var m=Number(r.value),T=m;const R=Number(i.value),x=Number(c.value)/100,f=R+5-u,v=Math.round(Math.log(14e4/g)/Math.log(1.03));balanceMultiplier=1+x;const y=Number(s.value);var M=m,h=u;if(h<50&&M>6e3?(console.log("User is < 50 and entered an annual contribution > $6000"),(m=6e3).value=6e3,console.log("Reset Annual Contribution to: "+m)):h>50&&M>7e3&&(console.log("User is > 50 and entered an annual contribution > $7000"),(m=7e3).value=7e3,console.log("Reset Annual Contribution to: "+m)),1==y&&g>0&&g<9875){var p=.1,A=Math.round(p-.03);console.log("Marginal Tax Rate rn is: "+p),console.log("Retirement Tax Rate rn is: "+A)}else if(1==y&&g>9876&&g<40125){A=(p=.12)-.02;console.log("Marginal Tax Rate rn is: "+p)}else if(1==y&&g>40126&&g<85525){A=(p=.22)-.02;console.log("Marginal Tax Rate rn is: "+p)}else if(1==y&&g>85526&&g<163300){A=(p=.24)-.02;console.log("Marginal Tax Rate rn is: "+p)}if(2==y&&g>0&&g<9875){p=.1;console.log("Marginal Tax Rate rn is: "+p)}else if(2==y&&g>9876&&g<40125){p=.12;console.log("Marginal Tax Rate rn is: "+p)}else if(2==y&&g>40126&&g<85525){p=.22;console.log("Marginal Tax Rate rn is: "+p)}else if(2==y&&g>85526&&g<163300){p=.24;console.log("Marginal Tax Rate rn is: "+p)}if(3==y&&g>0&&g<19750){p=.1;console.log("Marginal Tax Rate rn is: "+p)}else if(3==y&&g>19751&&g<80250){p=.12;console.log("Marginal Tax Rate rn is: "+p)}else if(3==y&&g>80251&&g<171050){p=.22;console.log("Marginal Tax Rate rn is: "+p)}else if(3==y&&g>171051&&g<326600){p=.24;console.log("Marginal Tax Rate rn is: "+p)}if(4==y&&g>0&&g<14100){p=.1;console.log("Marginal Tax Rate rn is: "+p)}else if(4==y&&g>14101&&g<53700){p=.12;console.log("Marginal Tax Rate rn is: "+p)}else if(4==y&&g>53701&&g<85500){p=.22;console.log("Marginal Tax Rate rn is: "+p)}else if(4==y&&g>85501&&g<163300){p=.24;console.log("Marginal Tax Rate rn is: "+p)}A=p-.02,console.log("Marginal Tax Rate is: "+p),console.log("Retirement Tax Rate is: "+A);var I=[];let S=u,C=d,q=b,N=T*p,F=m,w=R,$=g,L=x,O=p,B=A,E=0,Y=y;for(let a=0;a<f;a++){var H=Math.floor(a)+S;I.push({month:a,year:H,date:`${H} years and ${a%12} months`,xlabel:`${H} years`,age:S,"roth-balance":C,"trad-balance":q,"taxable-savings":N,"curr-marginal-tax-rate":O,"tax-balance":E,"annual-contribution":F,"current-income":$,"curr-marital-status":Y}),console.log("Your current age rn is: "+H),console.log(v),a==v&&(I[I.length-1].annotation="Income Limit Reached"),a==w-S&&(I[I.length-1].annotation="Retire  at  "+w),q=Math.round(q*balanceMultiplier),1==Y?q+=F:2==Y?q+=F:4==Y?q+=F:3==Y&&(q+=F),N+=F*O,console.log("Total Taxable Savings is: "+N),console.log("Current Trad IRA Balance is "+q),H==w&&(q=Math.round(q*(1-B)),q+=Math.round(N),e.querySelector("#curr-trad-balance").innerText=Formatter.price(q)),effectiveAfterTaxYield=L*(1-(O+0)),console.log("Effective After Tax Yield is: "+effectiveAfterTaxYield),E=Math.round(E*(1+effectiveAfterTaxYield)),1==Y?E+=F:2==Y?E+=F:4==Y?E+=F:3==Y&&(E+=F),console.log("Current Taxable Account Balance After Subtracting Taxes: "+E),H==w&&(e.querySelector("#taxableacctbalance").innerText=Formatter.price(E)),C=Math.round(C*balanceMultiplier),1==Y&&$<14e4?C+=F:2==Y&&$<14e4?C+=F:4==Y&&$<14e4?C+=F:3==Y&&$<208e3&&(C+=F),console.log("Current Roth IRA Balance is "+C),H==w&&(e.querySelector("#curr-roth-balance").innerText=Formatter.price(C));var D="";H==w&&C>q?(D="ROTH IRA",e.querySelector("#winner").innerText=D,console.log("v "+C),console.log("v "+q),console.log("WINNER IS ROTH IRA")):H==w&&C<q&&(D="TRADITIONAL IRA",e.querySelector("#winner").innerText=D,console.log("v "+C),console.log("v "+q),console.log("WINNER IS TRADITIONAL IRA")),$*=1.03,console.log("Your Current Income rn is: "+$)}const G=e=>`${e.date}\n`+`${Formatter.price(e["current-income"])} Current Earned Income\n`+`${Formatter.price(e["roth-balance"])} Roth IRA Balance\n`+`${Formatter.price(e["trad-balance"])} Traditional IRA Balance\n`+`${Formatter.price(e["tax-balance"])} Taxable Account Balance\n`,k=new google.visualization.DataTable;k.addColumn({label:"Time",type:"string"}),k.addColumn({type:"string",role:"annotation"}),k.addColumn({label:"Roth",type:"number"}),k.addColumn({label:"Trad",type:"number"}),k.addColumn({label:"Brok",type:"number"}),k.addColumn({type:"string",role:"tooltip"}),k.addRows(I.slice(0,900).map(e=>[e.xlabel,e.annotation,e["roth-balance"],e["trad-balance"],e["tax-balance"],G(e)])),new google.visualization.AreaChart(a).draw(k,Object.assign({},GOOGLE_CHARTS_CONFIG,{title:"",curveType:"function",series:[{color:"#008000",visibleInLegend:!0},{color:"#FF8C00",visibleInLegend:!0},{color:"#0000FF",visibleInLegend:!0}],legend:{position:"top",alignment:"end",textStyle:{color:"gray",fontSize:14}},intervals:{style:"line"},vAxis:{textPosition:"out"},interpolateNulls:!0,annotations:{style:"line"}})),a.style.backgroundImage="none"}).init()}();</script>
+</div>
+
+        <!-- Add some whitespace to the bottom -->
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+    </main>
+
+    <!-- Load analytics at the end of the page -->
+    <!-- <script src="../../components/analytics.tpl.html" data-include data-vars='{"root": "../.."}'></script> -->
+
+
+</body></html>

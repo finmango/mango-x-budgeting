@@ -1,0 +1,146 @@
+<!DOCTYPE html><html><!-- HTML page head --><head>
+    <!-- HTML metadata -->
+    <meta charset="UTF-8">
+    <title>FinMango Budget Simulator</title>
+    <meta name="description" content="Budget Simulator, made with love by FinMango">
+    <link rel="icon" type="image/ico" href="./static/favicon.ico">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FinMango Budget Simulator">
+
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="./static/favicon.ico">
+
+    <!-- Capabilities-related metadata -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <!-- Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- MomentJS -->
+    <script type="text/javascript" src="./third_party/moment/min/moment.min.js"></script>
+
+    <!-- Custom styles and fonts -->
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/goldman-sans">
+    <link rel="stylesheet" href="./third_party/picnic/picnic.min.css">
+    <link rel="stylesheet" href="./static/styles.min.css">
+
+    <!-- Polyfills, custom functions and constants -->
+    <script type="text/javascript" src="./static/cache.min.js"></script>
+    <script type="text/javascript" src="./static/formatter.min.js"></script>
+    <script type="text/javascript" src="./static/component-helper.min.js"></script>
+    <script type="text/javascript" src="./static/polyfills.min.js"></script>
+    <script type="text/javascript">const DEFAULT_OPTIONS={};CURRENT_OPTIONS=Object.keys(DEFAULT_OPTIONS).reduce((t,e)=>Object.assign(t,{[e]:sessionStorage.getItem(e)||DEFAULT_OPTIONS[e]}),{}),GOOGLE_CHARTS_CONFIG=window.GOOGLE_CHARTS_CONFIG||{theme:"material",fontName:"Goldman Sans",colors:["{{theme-primary}}"],legend:{position:CURRENT_OPTIONS.chart_legend_position||"none"},chartArea:{width:"100%",height:"100%",left:parseInt(CURRENT_OPTIONS.chart_padding_left||64),bottom:parseInt(CURRENT_OPTIONS.chart_padding_bottom||48),top:parseInt(CURRENT_OPTIONS.chart_padding_top||24)},titlePosition:"in",axisTitlesPosition:"in",hAxis:{textPosition:"bottom",textStyle:{fontName:"Goldman Sans"}},vAxis:{textPosition:"out",viewWindow:{min:0},textStyle:{fontName:"Goldman Sans"}},height:parseInt(CURRENT_OPTIONS.chart_height||300)};</script>
+
+
+
+</head><body>
+    <!-- Page header -->
+    <header class="flex center one">
+    <div>
+        <a class="centered uppercase" target="_blank" href="https://finmango.org" style="display: block; padding: 0;">
+            <img class="centered" src="./static/logo.png" height="128" width="auto">
+        </a>
+    </div>
+</header>
+
+    <main class="single-column-wide" style="margin-top: auto; margin-bottom: auto;">
+
+        <div id="mangox-budget-survey">
+    <style>.animated{transition:all .5s ease-in-out}.screen{height:0;opacity:0;overflow:hidden;max-width:600px;display:block;margin-left:auto;margin-right:auto}.screen-visible{height:auto;opacity:1;overflow:initial}.story-button{background-color:#4caf50;border:none;color:#fff;padding:15px 32px;text-align:center;text-decoration:none;display:inline-block;font-size:16px;margin:4px 2px;cursor:pointer}.button2{background-color:#4caf50}.button3{background-color:orange}</style>
+
+    <div class="screen animated" id="mangox-budget-screen-1">
+        <h2 class="centered" style="text-transform: none; font-size: xx-large;">
+            BUDGET SIMULATOR
+        </h2>
+        <p class="centered one" style="text-align: justify;">
+            Welcome to the <b>FinMango Budget SIMULATOR!</b> 
+            A <b>budget</b> is a plan for every dollar you have for a defined time period (usually a month), 
+            and <b>budgeting</b> is a essential life skill for anyone of any background, 
+            age, and net worth in order to achieve financial freedom. 
+            </p><div class="spacer"></div>
+            This budgeting simulator will enable you to organize and visualize your spending 
+            and see if you are on track to meet your financial goals.           
+        <p></p>
+        <div class="spacer"></div>
+    </div> 
+
+    <div class="screen animated" id="mangox-budget-screen-2">
+        <div>
+            <h2 class="centered" style="text-transform: uppercase; font-size: x-large;">
+                The 50/30/20 Rule of Budgeting
+            </h2>
+            <p class="centered one" style="text-align: justify;">
+                A common rule of thumb for a balanced budget is that 
+                you should spend <b>50%</b> of your monthly income on necessities, <b>30%</b> on wants and 
+                <b>20%</b> to save and pay off debt. 
+                In this simulator, we use this <b>50-30-20 rule</b> to help you assess how healthy your budget is!   
+                </p><div class="spacer"></div>
+                Please enter your <b>estimated net take home pay</b> per month below. This is the amount remaining
+                after all deduductions (federal, state and local income tax, Social Security and Medicare contributions, retirement account contributions, and medical, dental and other insurance premiums) 
+                are taken out. 
+            <p></p>
+        </div>
+        <div class="centered flex one">
+            <label for="age">
+                My estimated net take home pay per month is: 
+            </label>
+            <input type="number" pattern="/d*" id="age" min="200" value="200">
+            <span class="centered" style="font-size: small;"> 
+            </span>
+        </div>
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+    </div>
+
+    <div class="screen animated" id="mangox-budget-screen-3">
+        <div>
+            <h2 class="centered" style="text-transform: uppercase; font-size: x-large;">
+                Cost Categories (What am I spending my money on?!)
+            </h2>
+            <p class="centered one" style="text-align: justify;">
+                   
+                </p><div class="spacer"></div>
+                
+            <p></p>
+        </div>
+        <div class="centered flex one">
+            <label for="age">
+                Food
+            </label>
+            <input type="number" pattern="/d*" id="age" min="200" value="200">
+            <span class="centered" style="font-size: small;"> 
+            </span>
+        </div>
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+    </div>
+
+
+    <div class="screen animated" id="nav">
+        <div class="centered flex one">
+            <button id="next">CONTINUE</button>
+            <button onclick="window.location.reload()">START OVER</button>
+            <div class="spacer"></div>
+            <button class="story-button button2" onclick="window.open('https://finlit.finmango.org/importance-of-budgeting/','_blank')">Mango Story 🥭: The Importance of Budgeting</button>
+            <button class="story-button button2" onclick="window.open('https://stories.finmango.org/','_blank')">All Mango Stories 🥭: Bite-Sized Lessons</button>
+
+
+        </div>
+    </div>
+
+    <script async>!async function(){const e=document.currentScript.parentElement;let c=0;const s=[].slice.call(e.querySelectorAll("div.screen"),0,-1);e.querySelector("#next").addEventListener("click",t=>{if(c+1<s.length){const e=s[c],t=s[c+1];e.classList.remove("screen-visible"),t.classList.add("screen-visible"),c++}else{const c=[].slice.call(e.querySelectorAll("input, select")),s=window.location.pathname.includes("/embed/")?"./embed/chart/":"./view/chart/",t=new URL(s,window.location.href);c.forEach(e=>{t.searchParams.set(e.id,e.value)}),window.location=t}}),e.querySelector("div.screen:first-of-type").classList.add("screen-visible"),e.querySelector("#nav").classList.add("screen-visible")}();</script>
+</div>
+
+        <!-- Add some whitespace to the bottom -->
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+    </main>
+
+    <!-- Load analytics at the end of the page -->
+    <!-- <script src="components/analytics.tpl.html" data-include data-vars='{"root": "."}'></script> -->
+
+
+</body></html>
