@@ -1,0 +1,544 @@
+<div class="screen animated" id="fire-calculator-chart">
+    <div>
+        <h2 class="centered" style="text-transform: none; font-size: xx-large;">
+            <span style="font-size: xx-large;">
+            THE <span id="winner" style="font-size: xx-large;"></span> WON! 🔥💯🥭
+            </span>
+         </h2>
+        <h2 class="margin-left" style="text-transform: none; font-size: medium;">
+           <span style="font-size: medium;">
+            At retirement, your Roth IRA balance could be <span id="curr-roth-balance" style="font-size: large;"></span>
+            and your Traditional IRA balance could be <span id="curr-trad-balance" style="font-size: large;"></span>.
+            If you invested in a Taxable Brokerage Account instead, 
+            your balance would only be about <span id="taxableacctbalance" style="font-size: large;"> $XXX,XXX</span>.
+        </h2>
+    </div>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+    <div id="chart-container" class="chart-container"></div>
+    <div class="spacer"></div>
+    <summary>NOTE: The Traditional IRA balance line dips because we subtract total income taxes 
+        you pay during retirement. </summary>
+    <div class="spacer"></div>
+    <details>
+        <summary>Calculator Options</summary>
+        <div class="spacer"></div>
+        <form class="flex one two-600">
+            <div>
+                <label for="age" style="margin-bottom: auto;">
+                    Your Age
+                    </br>
+                    <small>You can open an IRA account at any age you have earned income. If you are under 18, need help tough! See what happens when you start investing early.</small>
+                </label>
+                <input type="number" pattern="/d*" id="age" min="16" value="16" style="margin-top: auto;" />
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="initial-income">
+                    Earned Income Per Year Before Taxes
+                    </br>
+                    <small>To qualify for a Roth IRA, your earned income must be less than $140,000 per year before taxes if you are single 
+                        and $208,000 per year if you are married and filing taxes together. 
+                    </small>
+                </label>
+                <input type="number" pattern="/d*" id="initial-income" min="1" value="40000" max="139000" />
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="initial-balance">
+                    Current Roth IRA Balance
+                    </br>
+                    <small>Set to $0 if you do not have one yet!</small>
+                </label>
+                <input type="number" pattern="/d*" id="initial-balance" min="0" value="0" />
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="annual-contribution">
+                    Your Annual Contribution
+                    </br>
+                    <small>The max you can contribute if you are less than 50 years old is about $6,000 per year.</small>
+                </label>
+                <input type="number" pattern="/d*" id="annual-contribution" min="1" value="1000" />
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="retirement-age">
+                    Age You Want To Retire!
+                    </br>
+                    <small>65 is a normal retirement age at which you can draw full Social Security benefits.</small>
+                </label>
+                <input type="number" pattern="/d*" id="retirement-age" min="59" value="65" />
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="risk-tolerance">
+                    Your Risk Tolerance
+                    </br>
+                    <small> 
+                        The more aggressive risk you take on, the greater the reward and potential Rate of Return (RoR).
+                    </small>
+                </label>
+                <select id="risk-tolerance">
+                    <option value=10>Aggressive (10% RoR)</option>
+                    <option value=7 selected>Moderate (7-8% RoR)</option>
+                    <option value=5.5>Conservative (5-6% RoR)</option>
+                </select> 
+                <div class="spacer"></div>
+            </div>
+            <div>
+                <label for="marital-status">
+                    Your Marital Status
+                    </br>
+                    <small> See the impact of your marital
+                        status on the Traditional IRA and taxable account balance. 
+                    </small>
+                </label>
+                <select id="marital-status">
+                    <option value=1 selected>Single</option>
+                    <option value=2 >Married but Filing Taxes Separately</option>
+                    <option value=3>Married but Filing Taxes Jointly</option>
+                    <option value=4>Head of Household</option>
+                </select>
+            </div>
+            <div>
+                <label for="calculator-assumptions">
+                    Calculator Assumptions: 
+                    </br>
+                    <small>
+                        <li>
+                            Warning! Inputting an income that is too high outputs NaN (Not a Number)
+                        </li>
+                        <li>
+                            If you make over $140k if you are single and $208k if you're married, the 
+                            Roth IRA balance should be 0 because you do not quality.  
+                        </li>
+                        <li>
+                            We assume that your income rises 3% every year to keep up with the inflation rate.
+                            If these raises put you over the income to qualify for a Roth IRA, we stop 
+                            contributing to the account to make its balance more realistic. 
+                        </li>
+                        <li>
+                            We assume that you contribute at the start of the year and 
+                            that your return on your investments is compounded annually. 
+                        </li>
+                        <li>
+                            We estimate Average Rates of Return (RoR) for 
+                            different Risk Tolerances based on historical averages. 
+                        </li>
+                        <li>
+                            We use your marital status (defaults to single ❤️) and income to 
+                            to identify your marginal tax bracket and calculate 
+                            the after-tax yield for the Taxable Brokerage Account.   
+                        </li>
+                        <li>
+                            In order to calculate the total balance of the traditional IRA after taxes are taken out,
+                            we need to know your Retirement Tax Rate. This is a pretty complex calculation that depends on 
+                            the variety of taxable incomes and reductions. 
+                            To simplify this calculation and estimate the value, 
+                            we assume that your retirement tax rate is 3% lower than your marginal tax bracket. 
+                            We also add the taxable savings from investing in a Traditional IRA back into the total. 
+                        </li>
+                    </small>
+                </label>
+                <div class="spacer"></div>
+            </div>
+            <div>  
+        </form>
+    </details>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+    <div class="screen animated" id="nav">
+        <div class="centered flex one">
+            <div class="spacer"></div>
+            <button onclick="location.href='https://finmango.github.io/mango-x-ira-battle/';">
+                START OVER</button>
+        </div>
+    </div>
+
+    <script async>
+
+
+        // Compound Interest Formula: Monthly <--> Annual A = P(1 + (r/n))^(n*t)
+        function monthlyToAnnualRate(rate) {
+            return Math.pow(rate + 1, 12) - 1;
+        }
+        function annualToMonthlyRate(rate) {
+            return Math.pow(rate + 1, 1 / 12) - 1;
+        }
+
+    
+        (async function () {
+            const rootElement = document.currentScript.parentElement;
+            await CacheHelper.loadGoogleCharts();
+
+
+            // ROTH IRA CALCULATOR CONSTANTS 
+            const chartElem = rootElement.querySelector('#chart-container');
+            //const startButton = rootElement.querySelector('#nav').classList.add('screen-visible');
+            const ageSelector = rootElement.querySelector('#age');
+            const initialIncomeSelector = rootElement.querySelector('#initial-income');
+            const initialRothBalanceSelector = rootElement.querySelector('#initial-balance');
+            const initialTradBalanceSelector = rootElement.querySelector('#initial-balance');
+            const annualContributionSelector = rootElement.querySelector('#annual-contribution');
+            const retirementAgeSelector = rootElement.querySelector('#retirement-age');
+            const riskToleranceSelector = rootElement.querySelector('#risk-tolerance');
+            const returnRateSelector = rootElement.querySelector('#expected-return');
+
+            // TAXABLE BROKERAGE ACCOUNT CONSTANTS 
+            const maritalStatusSelector = rootElement.querySelector('#marital-status'); 
+
+            // INCOME LIMIT CONSTANTS
+            const incomeLimitSingle = 140000; 
+            const incomeLimitMarriedFilingJointly = 208000;
+            
+
+            new ComponentHelper()
+                .addFormData(rootElement.querySelector('form'))
+                .onLoad(() => {
+
+                    // ROTH IRA CALCULATOR CONSTANTS 
+                    var initialAge = Number(ageSelector.value);
+                    const initialIncome = Number(initialIncomeSelector.value);
+                    const initialRothBalance = Number(initialRothBalanceSelector.value);
+                    const initialTradBalance = Number(initialTradBalanceSelector.value);
+                    var initialAnnualContribution = Number(annualContributionSelector.value);
+                    var initialTaxableSavings = initialAnnualContribution;
+                    const initialRetirementAge = Number(retirementAgeSelector.value);
+                    const initialRiskTolerance = Number(riskToleranceSelector.value) / 100;
+                    const projectedYears = (initialRetirementAge + 5) - initialAge;
+                    const incomeGrowthRate = 0.03;
+                    // Constant that calculates the number of years to hit income threshold:
+                    const n = Math.round(Math.log(140000/initialIncome)/Math.log(1 + incomeGrowthRate));
+
+                    // Compound Interest for Roth IRA
+                    balanceMultiplier = 1 + initialRiskTolerance; 
+
+                    // TAXABLE BROKERAGE AND TRAD IRA CALCULATOR CONSTANTS
+                    const initialMaritalStatus = Number(maritalStatusSelector.value);
+                    const initialTaxBalance = 0; 
+                    var taxesOwed = 0;
+                    var averageStateIncomeTax = 0.00; 
+
+                     // FIELD VALIDATIONS
+                    var x = initialAnnualContribution;
+                    var y = initialAge;
+                    var z1 = initialMaritalStatus; 
+                    var z2 = initialIncome; 
+
+                    if (y < 50 && x > 6000 ) {
+                        console.log('User is < 50 and entered an annual contribution > $6000');
+                        //initialAnnualContribution.text = text;
+                        initialAnnualContribution = 6000;
+                        initialAnnualContribution.value = 6000;
+                        console.log('Reset Annual Contribution to: ' + initialAnnualContribution);
+
+                    } else if (y > 50 && x > 7000){
+                        //text = "Please enter a value less than or equal to $7,000.";
+                        console.log('User is > 50 and entered an annual contribution > $7000');
+                        initialAnnualContribution = 7000; 
+                        initialAnnualContribution.value = 7000;
+                        console.log('Reset Annual Contribution to: ' + initialAnnualContribution);
+                    }
+
+                    // CALCULATING THE MARGINAL TAX RATE AND RETIREMENT TAX RATE FOR EACH SCENARIO 
+                    // Marital Status is Single 
+                    if (initialMaritalStatus == 1 && initialIncome > 0 && initialIncome < 9875){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.10;
+                        var initialRetirementTaxRate = Math.round(initialMarginalTaxRate - 0.03);   
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                        console.log('Retirement Tax Rate rn is: ' + initialRetirementTaxRate);
+                    }
+                    else if (initialMaritalStatus == 1 && initialIncome > 9876 && initialIncome < 40125){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.12; 
+                        var initialRetirementTaxRate = initialMarginalTaxRate - 0.02;
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 1 && initialIncome > 40126 && initialIncome < 85525){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.22; 
+                        var initialRetirementTaxRate = initialMarginalTaxRate - 0.02;
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 1 && initialIncome > 85526 && initialIncome < 163300){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.24; 
+                        var initialRetirementTaxRate = initialMarginalTaxRate - 0.02;
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+
+                    // Marital Status is Married, filing separately
+                    if (initialMaritalStatus == 2 && initialIncome > 0 && initialIncome < 9875){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.10; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 2 && initialIncome > 9876 && initialIncome < 40125){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.12; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 2 && initialIncome > 40126 && initialIncome < 85525){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.22; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 2 && initialIncome > 85526 && initialIncome < 163300){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.24; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+
+                    // Marital Status is Married, filing together
+                    if (initialMaritalStatus == 3 && initialIncome > 0 && initialIncome < 19750){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.10; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 3 && initialIncome > 19751 && initialIncome < 80250){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.12; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 3 && initialIncome > 80251 && initialIncome < 171050){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.22; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 3 && initialIncome > 171051 && initialIncome < 326600){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.24; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+
+                    // Marital Status is Head of Household 
+                    if (initialMaritalStatus == 4 && initialIncome > 0 && initialIncome < 14100){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.10; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 4 && initialIncome > 14101 && initialIncome < 53700){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.12; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 4 && initialIncome > 53701 && initialIncome < 85500){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.22; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    else if (initialMaritalStatus == 4 && initialIncome > 85501 && initialIncome < 163300){
+                        //console.log('Code is setting the marginal tax rate correctly!');
+                        var initialMarginalTaxRate = 0.24; 
+                        console.log('Marginal Tax Rate rn is: ' + initialMarginalTaxRate);
+                    }
+                    
+                    // To Simplify Complex Retirement Tax Rate Calculation that depends on alot of things...
+                    // Retirement Tax Rate is 2 percentage points below Marginal Tax Rate 
+                    initialRetirementTaxRate = initialMarginalTaxRate - 0.02; 
+                    console.log('Marginal Tax Rate is: ' + initialMarginalTaxRate);
+                    console.log('Retirement Tax Rate is: ' + initialRetirementTaxRate);
+
+                    var data = [];
+                    let currAge = initialAge;
+                    let currRothBalance = initialRothBalance;
+                    let currTradBalance = initialTradBalance;
+                    let currTaxableSavings = initialTaxableSavings * initialMarginalTaxRate;
+                    let currAnnualContribution = initialAnnualContribution;
+                    let currRetirementAge = initialRetirementAge;
+                    let currIncome = initialIncome;
+                    let currRiskTolerance = initialRiskTolerance;
+                    let currMarginalTaxRate = initialMarginalTaxRate; 
+                    let currRetirementTaxRate = initialRetirementTaxRate;
+                    let currTaxBalance = initialTaxBalance; 
+                    let currMaritalStatus = initialMaritalStatus; 
+
+                    for (let i = 0; i < projectedYears; i++) {
+                        var Years = Math.floor(i) + currAge;
+                        data.push({
+                            'month': i,
+                            'year': Years,
+                            'date': `${Years} years and ${i % 12} months`,
+                            'xlabel': `${Years} years`,
+                            'age':currAge,
+                            'roth-balance':currRothBalance,
+                            'trad-balance': currTradBalance,
+                            'taxable-savings': currTaxableSavings, 
+                            'curr-marginal-tax-rate': currMarginalTaxRate,
+                            'tax-balance':currTaxBalance, 
+                            'annual-contribution': currAnnualContribution,
+                            'current-income': currIncome,
+                            'curr-marital-status': currMaritalStatus,
+                        });
+
+                        console.log("Your current age rn is: " + Years);
+
+                        // Calculating raises in current income. If you hit 140k, no more contributions.
+                        //currIncome *= (1 + incomeGrowthRate);
+                        //console.log("Your Current Income rn is: " + currIncome);
+                        
+                        // Flag to mark when income goes over 140k on graph
+                        console.log(n);
+                        if (i == (n)){
+                            data[data.length - 1]['annotation'] = 'Income Limit Reached';
+                        }
+
+                        // Retirement Flag 
+                        if (i == (currRetirementAge - currAge)){
+                            data[data.length - 1]['annotation'] = 'Retire  at  ' + currRetirementAge;
+                        }
+
+                        // UPDATING CURRENT BALANCE OF TRAD IRA ACCOUNT 
+                        // ONLY SUBTRACT TAXES AFTER RETIREMENT
+                        currTradBalance = Math.round(currTradBalance * balanceMultiplier);
+
+                        if (currMaritalStatus == 1){
+                            currTradBalance += currAnnualContribution;
+                        }
+                        else if (currMaritalStatus == 2){
+                            currTradBalance += currAnnualContribution;
+                        }
+                        else if (currMaritalStatus == 4){
+                            currTradBalance += currAnnualContribution;
+                        }
+                        else if (currMaritalStatus == 3){
+                            currTradBalance += currAnnualContribution;
+                        } 
+
+                        // Add back in Taxable Savings from investing in a Traditional IRA every year (in the loop)
+                        currTaxableSavings += currAnnualContribution * currMarginalTaxRate; 
+                        console.log("Total Taxable Savings is: " + currTaxableSavings);
+
+
+                        console.log("Current Trad IRA Balance is " + currTradBalance);
+
+                         // SET THE FINAL CURRENT BALANCE OF TRADITIONAL IRA IN TEXT
+                         if (Years == currRetirementAge){
+                            currTradBalance = Math.round(currTradBalance * (1 - currRetirementTaxRate));
+                            currTradBalance += Math.round(currTaxableSavings);
+                            rootElement.querySelector('#curr-trad-balance').innerText = Formatter.price(currTradBalance);
+                        }
+
+
+                        // UPDATING CURRENT BALANCE OF TAXABLE BROKERAGE ACCOUNT 
+        
+                        // Compound Interest for Taxable Brokerage Account calculated via Effective After Tax Yield
+                        //https://smallbusiness.chron.com/calculate-effective-aftertax-yield-19035.html
+                        var totalTaxRate = currMarginalTaxRate + averageStateIncomeTax;
+                        effectiveAfterTaxYield = currRiskTolerance * (1 - totalTaxRate);
+                        console.log('Effective After Tax Yield is: ' + effectiveAfterTaxYield);
+
+                        // Calculate the interest first then add more money...
+                        currTaxBalance = Math.round(currTaxBalance * (1 + effectiveAfterTaxYield));
+
+                        // ASSUMPTION: STILL ACCOUNT FOR INCOME LIMIT TO MAKE THEM EQUAL AND ABLE TO BE COMPARED
+                        // BECAUSE WE ARE PUTTING THE EXACT SAME MONEY IN 
+                        if (currMaritalStatus == 1){
+                            currTaxBalance += currAnnualContribution;
+                        }
+                        else if (currMaritalStatus == 2){
+                            currTaxBalance += currAnnualContribution;
+                        }
+                        else if (currMaritalStatus == 4){
+                            currTaxBalance += currAnnualContribution;
+                        }
+                        else if (currMaritalStatus == 3){
+                            currTaxBalance += currAnnualContribution;
+                        }
+
+                        console.log("Current Taxable Account Balance After Subtracting Taxes: " + currTaxBalance);
+                        
+                        // SET THE FINAL CURENT BALANCE OF THE TAXABLE BROKERAGE ACCOUNT IN TEXT
+                        if (Years == currRetirementAge){
+                            rootElement.querySelector('#taxableacctbalance').innerText = Formatter.price(currTaxBalance);
+                        }
+
+                        // UPDATING CURRENT BALANCE OF ROTH IRA
+                        currRothBalance = Math.round(currRothBalance * balanceMultiplier);
+                        
+                        if (currMaritalStatus == 1 && currIncome < incomeLimitSingle){
+                            currRothBalance += currAnnualContribution;
+                        }
+                        else if (currMaritalStatus == 2 && currIncome < incomeLimitSingle){
+                            currRothBalance += currAnnualContribution;
+                        }
+                        else if (currMaritalStatus == 4 && currIncome < incomeLimitSingle){
+                            currRothBalance += currAnnualContribution;
+                        }
+                        else if (currMaritalStatus == 3 && currIncome < incomeLimitMarriedFilingJointly){
+                            currRothBalance += currAnnualContribution;
+                        }
+
+                        console.log("Current Roth IRA Balance is " + currRothBalance);
+                        
+                        
+                        // SET THE FINAL CURRENT BALANCE OF ROTH IRA IN TEXT  
+                        if (Years == currRetirementAge){
+                            rootElement.querySelector('#curr-roth-balance').innerText = Formatter.price(currRothBalance);
+                        }
+
+                        // SET WINNER IN TEXT 
+                        var winner1 = "";
+                        if (Years == currRetirementAge && currRothBalance > currTradBalance){
+                                winner1 = "ROTH IRA";
+                                rootElement.querySelector('#winner').innerText = winner1;
+                                console.log('v ' + currRothBalance);
+                                console.log('v ' + currTradBalance);
+                                console.log("WINNER IS ROTH IRA");
+                            }
+                        else if (Years == currRetirementAge && currRothBalance < currTradBalance){
+                            winner1 = "TRADITIONAL IRA";
+                            rootElement.querySelector('#winner').innerText = winner1;
+                            console.log('v ' + currRothBalance);
+                            console.log('v ' + currTradBalance);
+                            console.log("WINNER IS TRADITIONAL IRA");
+                        }
+
+
+                        // Calculating raises in current income. If you hit 140k, no more contributions.
+                        currIncome *= (1 + incomeGrowthRate);
+                        console.log("Your Current Income rn is: " + currIncome);
+                    }
+
+
+                    const tooltip = x =>
+                        `${x['date']}\n`+
+                        `${Formatter.price(x['current-income'])} Current Earned Income\n` +
+                        `${Formatter.price(x['roth-balance'])} Roth IRA Balance\n`+
+                        `${Formatter.price(x['trad-balance'])} Traditional IRA Balance\n`+
+                        `${Formatter.price(x['tax-balance'])} Taxable Account Balance\n`;
+
+                    const dataTable = new google.visualization.DataTable();
+                    dataTable.addColumn({ label: 'Time', type: 'string' });
+                    dataTable.addColumn({ type: 'string', role: 'annotation' });
+                    dataTable.addColumn({ label: 'Roth', type: 'number' });
+                    dataTable.addColumn({ label: 'Trad', type: 'number' });
+                    dataTable.addColumn({label: 'Brok', type: 'number'});
+                    dataTable.addColumn({ type: 'string', role: 'tooltip' });
+                    dataTable.addRows(data
+                        .slice(0, 75*12)
+                        .map(x => [x['xlabel'], x['annotation'], x['roth-balance'],x['trad-balance'],x['tax-balance'],tooltip(x)]));
+            
+                    var chartObject = new google.visualization.AreaChart(chartElem);
+
+                    chartObject.draw(dataTable, Object.assign({}, GOOGLE_CHARTS_CONFIG, {
+                        title: ``,
+                        curveType: 'function',
+                        series: [{ 'color': '#008000', visibleInLegend: true}, { 'color': '#FF8C00', visibleInLegend: true}, { 'color': '#0000FF', visibleInLegend: true}],
+                        legend: {position: 'top', alignment: 'end', textStyle: {color: 'gray', fontSize: 14}},
+                        intervals: { 'style': 'line' },
+                        vAxis: { textPosition: 'out' },
+                        interpolateNulls: true,
+                        annotations: {
+                            style: 'line'
+                        },
+                    }));
+
+                    // Hide loading spinner
+                    chartElem.style.backgroundImage = 'none';
+                }).init();
+        })();
+    </script>
+</div>

@@ -1,0 +1,40 @@
+header * {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    padding: 1em 0.2em;
+}
+
+.single-column {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1080px;
+}
+
+input#location-selector {
+    font-size: large;
+    padding-top: .2em;
+    padding-bottom: .2em;
+}
+
+header h1 {
+    font-size: 48px;
+    padding-top: 0.8em;
+}
+
+
+/* Fix for range selector */
+input[type=range] {
+    width: calc(100% - 1.2em);
+}
+
+summary {
+    cursor: pointer;
+}
+
+.chart-container {
+    width: 100%;
+    min-height: 300px;
+    background-image: url('loading.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+}
