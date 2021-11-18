@@ -74,10 +74,10 @@
             <p></p>
         </div>
         <div class="centered flex one">
-            <label for="age">
+            <label for="net-take-home-pay">
                 My estimated net take home pay per month is: 
             </label>
-            <input type="number" pattern="/d*" id="age" min="200" value="200">
+            <input type="number" pattern="/d*" id="net-take-home-pay" min="200" value="200">
             <span class="centered" style="font-size: small;"> 
             </span>
         </div>
@@ -88,37 +88,73 @@
     <div class="screen animated" id="mangox-budget-screen-3">
         <div>
             <h2 class="centered" style="text-transform: uppercase; font-size: x-large;">
-                Cost Categories (What am I spending my money on?)
+                Cost Categories
             </h2>
-            <p class="centered one" style="text-align: justify;">
-                   
-                </p><div class="spacer"></div>
-                
-            <p></p>
+            <p>Let's take a few moments to think about what we spend our money on each month and how much!
+                Are we doing well against our financial goals and the <b>50-30-20 rule</b>? 
+                Please enter the amount you think you spend on each cost category <b>per month</b> to find out. 
+            </p>
         </div>
         <div class="centered flex one">
-            <label for="age">
+            <label for="food">
                 Food
             </label>
-            <input type="number" pattern="/d*" id="age" min="200" value="200">
+            <input type="number" pattern="/d*" id="food" min="0" value="200">
             <span class="centered" style="font-size: small;"> 
             </span>
-        </div>
+            <label for="housing">
+                Housing or Rent
+            </label>
+            <input type="number" pattern="/d*" id="housing" min="0" value="700">
+            <span class="centered" style="font-size: small;"> 
+            </span>
+            <label for="transportation">
+                Transportation (Total for Car, Car Lease, Public Transortation, Ubers, etc.)
+            </label>
+            <input type="number" pattern="/d*" id="transportation" min="200" value="200">
+            <span class="centered" style="font-size: small;"> 
+            </span>
+            <label for="medical">
+                Medical
+            </label>
+            <input type="number" pattern="/d*" id="medical" min="200" value="200">
+            <span class="centered" style="font-size: small;"> 
+            </span>
+            <label for="child">
+                Childcare (If you have a child!)
+            </label>
+            <input type="number" pattern="/d*" id="child" min="200" value="200">
+            <span class="centered" style="font-size: small;"> 
+            </span>
+            <label for="subscriptions">
+                Subscriptions
+            </label>
+            <input type="number" pattern="/d*" id="subscriptions" min="200" value="200">
+            <span class="centered" style="font-size: small;"> 
+            <p>etc... How many should we have? Let's aim for as few as possible </p>
+        </span></div>
         <div class="spacer"></div>
         <div class="spacer"></div>
     </div>
-
 
     <div class="screen animated" id="nav">
         <div class="centered flex one">
             <button id="next">CONTINUE</button>
             <button onclick="window.location.reload()">START OVER</button>
             <div class="spacer"></div>
-            <button class="story-button button2" onclick="window.open('https://finlit.finmango.org/importance-of-budgeting/','_blank')">Mango Story 🥭: The Importance of Budgeting</button>
-            <button class="story-button button2" onclick="window.open('https://stories.finmango.org/','_blank')">All Mango Stories 🥭: Bite-Sized Lessons</button>
-
-
-        </div>
+            <!--<button class="story-button button2" onclick="window.open('https://finlit.finmango.org/importance-of-budgeting/','_blank')">Mango Story 🥭: The Importance of Budgeting</button>--> 
+            <!--<button class="story-button button2" onclick="window.open('https://stories.finmango.org/','_blank')">All Mango Stories 🥭: Bite-Sized Lessons</button>-->
+            <h2 class="centered" style="text-transform: uppercase; font-size: x-large; color:gray">
+                Budget 🥭 Stories
+            </h2>
+            <p>Learn more about budgeting in easy to consume, bite-sized lessons.</p>
+            <p class="centered one" style="text-align: center;"><a href="https://finlit.finmango.org/importance-of-budgeting/">Importance of Budgeting</a></p>
+            <p class="centered one" style="text-align: center;"><a href="https://finlit.finmango.org/the-503020-budget/">The 50/30/20 Budget</a></p>
+            <p class="centered one" style="text-align: center;"><a href="https://finlit.finmango.org/the-envelope-system/">The Envelope System</a></p>
+            <p class="centered one" style="text-align: center;"><a href="https://finlit.finmango.org/the-zero-based-budget-zbb/">The Zero-Based Budget</a></p>
+            <p class="centered one" style="text-align: center;"><a href="https://finlit.finmango.org/tips-to-stick-to-a-budget/">Tips to Stick to a Budget</a></p>
+            <p class="centered one" style="text-align: center;"><a href="https://finlit.finmango.org/budgeting-tools/">Budgeting Tools</a></p>
+            <p class="centered one" style="text-align: center;"><a href="https://finlit.finmango.org/common-budgeting-pitfalls/">Common Budgeting Pitfalls</a></p>        </div>
     </div>
 
     <script async>!async function(){const e=document.currentScript.parentElement;let c=0;const s=[].slice.call(e.querySelectorAll("div.screen"),0,-1);e.querySelector("#next").addEventListener("click",t=>{if(c+1<s.length){const e=s[c],t=s[c+1];e.classList.remove("screen-visible"),t.classList.add("screen-visible"),c++}else{const c=[].slice.call(e.querySelectorAll("input, select")),s=window.location.pathname.includes("/embed/")?"../../embed/chart/":"../../view/chart/",t=new URL(s,window.location.href);c.forEach(e=>{t.searchParams.set(e.id,e.value)}),window.location=t}}),e.querySelector("div.screen:first-of-type").classList.add("screen-visible"),e.querySelector("#nav").classList.add("screen-visible")}();</script>
